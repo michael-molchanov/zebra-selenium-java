@@ -31,6 +31,7 @@ RUN apt-get update \
   openjdk-11-jre-headless \
   openjdk-11-jre-zero \
   openjdk-11-jre-dcevm \
+  maven \
   python \
   python-pip \
   python-setuptools \

@@ -31,6 +31,16 @@ RUN apt-get update \
   openjdk-11-jre-headless \
   openjdk-11-jre-zero \
   openjdk-11-jre-dcevm \
+  python \
+  python-pip \
+  python-setuptools \
+  python-wheel \
+  python-dev \
+  python3 \
+  python3-pip \
+  python3-setuptools \
+  python3-wheel \
+  python3-dev \
   libssl-dev \
   libffi-dev \
   && locale-gen en_US.UTF-8 \

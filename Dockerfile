@@ -32,11 +32,6 @@ RUN apt-get update \
   openjdk-11-jre-zero \
   openjdk-11-jre-dcevm \
   maven \
-  python \
-  python-pip \
-  python-setuptools \
-  python-wheel \
-  python-dev \
   python3 \
   python3-pip \
   python3-setuptools \
@@ -46,21 +41,21 @@ RUN apt-get update \
   libffi-dev \
   && locale-gen en_US.UTF-8 \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-  && pip install yq requests
+  && pip3 install yq requests
 
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
-COPY --from=hairyhenderson/gomplate:v3.1.0-slim /gomplate /bin/gomplate
+COPY --from=hairyhenderson/gomplate:v3.9.0-slim /gomplate /bin/gomplate
 
 # Install goofys
-ENV GOOFYS_VERSION 0.19.0
+ENV GOOFYS_VERSION 0.24.0
 RUN curl --fail -sSL -o goofys https://github.com/kahing/goofys/releases/download/v${GOOFYS_VERSION}/goofys \
   && mv goofys /usr/local/bin/ \
   && chmod +x /usr/local/bin/goofys
 
 # Install fd
-ENV FD_VERSION 7.3.0
+ENV FD_VERSION 8.2.1
 RUN curl --fail -sSL -o fd.tar.gz https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd-v${FD_VERSION}-x86_64-unknown-linux-gnu.tar.gz \
   && tar -zxf fd.tar.gz \
   && cp fd-v${FD_VERSION}-x86_64-unknown-linux-gnu/fd /usr/local/bin/ \
@@ -69,7 +64,7 @@ RUN curl --fail -sSL -o fd.tar.gz https://github.com/sharkdp/fd/releases/downloa
   && chmod +x /usr/local/bin/fd
 
 # Install variant
-ENV VARIANT_VERSION 0.36.4
+ENV VARIANT_VERSION 0.37.0
 RUN curl --fail -sSL -o variant.tar.gz https://github.com/mumoshu/variant/releases/download/v${VARIANT_VERSION}/variant_${VARIANT_VERSION}_linux_amd64.tar.gz \
     && mkdir -p variant \
     && tar -zxf variant.tar.gz -C variant \
@@ -79,8 +74,8 @@ RUN curl --fail -sSL -o variant.tar.gz https://github.com/mumoshu/variant/releas
     && chmod +x /usr/local/bin/variant
 
 ENV ALLURE_HOME /usr
-# See http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/
-ENV ALLURE_VERSION 2.13.2
+# See https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/
+ENV ALLURE_VERSION 2.13.9
 RUN curl -o allure-commandline-${ALLURE_VERSION}.tgz -Ls https://repo1.maven.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.tgz \
   && tar -zxvf allure-commandline-${ALLURE_VERSION}.tgz -C /opt/ \
   && ln -s /opt/allure-${ALLURE_VERSION}/bin/allure /usr/bin/allure \
